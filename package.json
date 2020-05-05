@@ -1,0 +1,23 @@
+{
+  "name": "quiz-api",
+  "version": "1.0.0",
+  "description": "Quiz API resource using Node JS, Express JS and MySQL",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "restapi"
+  ],
+  "author": "yogski",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
+}
