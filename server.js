@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+var cors = require('cors');
 const router = require("./app/routes/routes.js")
 
 const app = express();
@@ -11,6 +12,7 @@ dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 //setup routes
 app.use(prefix, router);
