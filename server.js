@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 var cors = require('cors');
-const router = require("./app/routes/routes.js")
+const quizRouter = require("./app/routes/quiz.routes")
+const authRouter = require("./app/routes/auth.routes")
 
 const app = express();
 const prefix = process.env.PREFIX || '';
@@ -15,7 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //setup routes
-app.use(prefix, router);
+app.use(prefix, quizRouter);
+// app.use(prefix, authRouter);
 
 //start server
 const PORT = process.env.PORT || 3333;

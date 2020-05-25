@@ -5,7 +5,7 @@ exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
     res.status(400).send({
-      message: "Content can not be empty!"
+      message: "Content cannot be empty!"
     });
   }
 
@@ -13,6 +13,8 @@ exports.create = (req, res) => {
   const quiz = new Quiz({
     question: req.body.question,
     answer: req.body.answer,
+    lang: req.body.lang,
+    type: req.body.type
   });
 
   // Save Quiz in the database
@@ -28,17 +30,28 @@ exports.create = (req, res) => {
 
 // Find a single Quiz randomly
 exports.findOneRandom = (req, res) => {
-  Quiz.findOneRandom((err, data) => {
+  Quiz.findOneRandom(req.query,(err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found Quiz with id ${req.params.quizId}.`
+          message: `Cannot get quiz`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving Quiz with id " + req.params.quizId
+          message: `Error. Cannot get quiz.`
         });
       }
+    } else res.send(data);
+  });
+};
+
+// Find a single Quiz randomly
+exports.findAll = (req, res) => {
+  Quiz.findAll((err, data) => {
+    if (err) {
+        res.status(500).send({
+          message: "Error retrieving Quizzes"
+        });
     } else res.send(data);
   });
 };

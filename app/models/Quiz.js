@@ -4,6 +4,8 @@ const sql = require("./db.js");
 const Quiz = function(quiz) {
   this.question = quiz.question;
   this.answer = quiz.answer;
+  this.lang = quiz.lang;
+  this.type = quiz.type;
 };
 
 Quiz.create = (newQuiz, result) => {
@@ -20,7 +22,7 @@ Quiz.create = (newQuiz, result) => {
 };
 
 Quiz.findOne = (quizId, result) => {
-  sql.query(`SELECT question, answer FROM quizzes WHERE id = ${quizId}`, (err, res) => {
+  sql.query(`SELECT * FROM quizzes WHERE id = ${quizId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -38,8 +40,19 @@ Quiz.findOne = (quizId, result) => {
   });
 };
 
-Quiz.findOneRandom = result => {
-  sql.query("SELECT question, answer FROM quizzes ORDER BY RAND() LIMIT 1", (err, res) => {
+Quiz.findOneRandom = (params, result) => {
+  var query = "SELECT question, answer FROM quizzes";
+  const existingParams = ["lang", "type"].filter(field => params[field]);
+
+  if (existingParams.length) {
+      query += " WHERE ";
+      query += existingParams.map(field => `${field} = ?`).join(" AND ");
+  }
+  query += " ORDER BY RAND(), ID LIMIT 1"
+
+  sql.query(query, 
+    existingParams.map(field => params[field]),
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -49,6 +62,25 @@ Quiz.findOneRandom = result => {
     if (res.length) {
       console.log("found quiz: ", res[0]);
       result(null, res[0]);
+      return;
+    }
+
+    // not found Quiz with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+Quiz.findAll = result => {
+  sql.query("SELECT question, answer FROM quizzes", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    if (res.length) {
+      console.log("Select ALL ");
+      result(null, res);
       return;
     }
 
