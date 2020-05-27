@@ -4,7 +4,7 @@ const Quiz = require("../models/Quiz.js");
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Content cannot be empty!"
     });
   }
@@ -20,11 +20,11 @@ exports.create = (req, res) => {
   // Save Quiz in the database
   Quiz.create(quiz, (err, data) => {
     if (err)
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Quiz."
       });
-    else res.send(data);
+    else return res.send(data);
   });
 };
 
@@ -33,15 +33,17 @@ exports.findOneRandom = (req, res) => {
   Quiz.findOneRandom(req.query,(err, data) => {
     if (err) {
       if (err.kind === "not_found") {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Cannot get quiz`
         });
       } else {
-        res.status(500).send({
+        return res.status(500).send({
           message: `Error. Cannot get quiz.`
         });
       }
-    } else res.send(data);
+    }
+    
+    res.status(200).send(data);
   });
 };
 
@@ -49,10 +51,10 @@ exports.findOneRandom = (req, res) => {
 exports.findAll = (req, res) => {
   Quiz.findAll((err, data) => {
     if (err) {
-        res.status(500).send({
+        return res.status(500).send({
           message: "Error retrieving Quizzes"
         });
-    } else res.send(data);
+    } else return res.send(data);
   });
 };
 
@@ -61,15 +63,15 @@ exports.findOne = (req, res) => {
   Quiz.findOne(req.params.quizId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Not found Quiz with id ${req.params.quizId}.`
         });
       } else {
-        res.status(500).send({
+        return res.status(500).send({
           message: "Error retrieving Quiz with id " + req.params.quizId
         });
       }
-    } else res.send(data);
+    } else return res.send(data);
   });
 };
 
@@ -77,7 +79,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   // Validate Request
   if (!req.body) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Content can not be empty!"
     });
   }
@@ -90,15 +92,15 @@ exports.update = (req, res) => {
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res.status(404).send({
+          return res.status(404).send({
             message: `Not found Quiz with id ${req.params.quizId}.`
           });
         } else {
-          res.status(500).send({
+          return res.status(500).send({
             message: "Error updating Quiz with id " + req.params.quizId
           });
         }
-      } else res.send(data);
+      } else return res.send(data);
     }
   );
 };
@@ -108,14 +110,14 @@ exports.delete = (req, res) => {
   Quiz.remove(req.params.quizId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
-        res.status(404).send({
+        return res.status(404).send({
           message: `Not found Quiz with id ${req.params.quizId}.`
         });
       } else {
-        res.status(500).send({
+        return res.status(500).send({
           message: "Could not delete Quiz with id " + req.params.quizId
         });
       }
-    } else res.send({ message: `Quiz was deleted successfully!` });
+    } else return res.send({ message: `Quiz was deleted successfully!` });
   });
 };

@@ -106,8 +106,8 @@ Quiz.update = (quizId, quiz, result) => {
         return;
       }
 
-      console.log("updated quiz: ", { id: id, ...quiz });
-      result(null, { id: id, ...quiz });
+      console.log("updated quiz: ", { id: quizId, ...quiz });
+      result(null, { id: quizId, ...quiz });
     }
   );
 };

@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //setup routes
+app.use(prefix, authRouter);
 app.use(prefix, quizRouter);
-// app.use(prefix, authRouter);
 
 //start server
 const PORT = process.env.PORT || 3333;
