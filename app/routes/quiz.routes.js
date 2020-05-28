@@ -9,13 +9,59 @@ var quizRouter = express.Router();
   //quizRouter.use(auth.checkApiUsage)
   
   // ACCESSIBLE ROUTES
-  // Create a new quiz entry
-  quizRouter.post("/quiz", validator.requestBody, quiz.create);
+/**
+ * @api {post} /quiz Submit a quiz entry
+ * @apiVersion 0.1.0
+ * @apiName SubmitQuizEntry
+ * @apiGroup Quiz
+ *
+ * @apiParam {String} api_key Mandatory API key
+ * @apiParam {String} question  Body: question field
+ * @apiParam {String} answer  Body: answer field
+ * @apiParam {String="id","en","others"} lang  Body: language field (available: id, en, others)
+ * @apiParam {String="wordgame","jokes","trivia","others"} type  Body: type of quiz (available:  
+ * @apiParamExample {json} Request-Example:
+ *              { 
+ *                "question": "What is a question?",
+ *                "answer": "One that has answer",
+ *                "lang": "en",
+ *                "type": "trivia" 
+ *              }
+ *              
+ * @apiSuccess {String} success Quiz has been created
+ */
+quizRouter.post("/quiz", validator.requestBody, quiz.create);
 
-  // Get a single Quiz in random fashion
+/**
+ * @api {get} /quiz Get random quiz
+ * @apiVersion 0.1.0
+ * @apiName GetRandomQuiz
+ * @apiGroup Quiz
+ *
+ * @apiParam {String} api_key Mandatory API key
+ * @apiParam {String="id","en","others"} [lang]  Optional: language field (available: id, en, others)
+ * @apiParam {String="wordgame","jokes","trivia","others"} [type]  Optional: type of quiz (available: wordgame, jokes, trivia, others)
+ *
+ * @apiSuccess {String} question Quiz question.
+ * @apiSuccess {String} answer  Quiz answer.
+ */
   quizRouter.get("/quiz", quiz.findOneRandom);
 
-  // Get a single Quiz with quizId
+/**
+ * @api {get} /quiz/:id Get quiz with specific id
+ * @apiVersion 0.1.0
+ * @apiName GetQuizById
+ * @apiGroup Quiz
+ *
+ * @apiParam {String} api_key Mandatory API key
+ * @apiParam {String} id  Quiz Id
+ *
+ * @apiSuccess {Number} id Quiz Id
+ * @apiSuccess {String="id","en","others"} lang Quiz language (available: id, en, others)
+ * @apiSuccess {String="wordgame","jokes","trivia","others"} type Quiz type (available: wordgame, jokes, trivia, others)
+ * @apiSuccess {String} question Quiz question.
+ * @apiSuccess {String} answer  Quiz answer.
+ */
   quizRouter.get("/quiz/:quizId", quiz.findOne);
   
   // LIMITED ROUTES

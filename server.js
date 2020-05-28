@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 //setup routes
+app.use(express.static('public'));
 app.use(prefix, authRouter);
 app.use(prefix, quizRouter);
 

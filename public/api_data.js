@@ -1,0 +1,277 @@
+define({ "api": [
+  {
+    "type": "post",
+    "url": "/signin",
+    "title": "Sign In",
+    "version": "0.1.0",
+    "name": "SignIn",
+    "group": "Auth",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>body: email field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{ \n  \"email\": \"john.smith@somerandommail.com\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "success",
+            "description": "<p>New API key access has been created</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/auth.routes.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "get",
+    "url": "/quiz/:id",
+    "title": "Get quiz with specific id",
+    "version": "0.1.0",
+    "name": "GetQuizById",
+    "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "api_key",
+            "description": "<p>Mandatory API key</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Quiz Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Quiz Id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"id\"",
+              "\"en\"",
+              "\"others\""
+            ],
+            "optional": false,
+            "field": "lang",
+            "description": "<p>Quiz language (available: id, en, others)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"wordgame\"",
+              "\"jokes\"",
+              "\"trivia\"",
+              "\"others\""
+            ],
+            "optional": false,
+            "field": "type",
+            "description": "<p>Quiz type (available: wordgame, jokes, trivia, others)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "question",
+            "description": "<p>Quiz question.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>Quiz answer.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/quiz.routes.js",
+    "groupTitle": "Quiz"
+  },
+  {
+    "type": "get",
+    "url": "/quiz",
+    "title": "Get random quiz",
+    "version": "0.1.0",
+    "name": "GetRandomQuiz",
+    "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "api_key",
+            "description": "<p>Mandatory API key</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"id\"",
+              "\"en\"",
+              "\"others\""
+            ],
+            "optional": true,
+            "field": "lang",
+            "description": "<p>Optional: language field (available: id, en, others)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"wordgame\"",
+              "\"jokes\"",
+              "\"trivia\"",
+              "\"others\""
+            ],
+            "optional": true,
+            "field": "type",
+            "description": "<p>Optional: type of quiz (available: wordgame, jokes, trivia, others)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "question",
+            "description": "<p>Quiz question.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>Quiz answer.</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/quiz.routes.js",
+    "groupTitle": "Quiz"
+  },
+  {
+    "type": "post",
+    "url": "/quiz",
+    "title": "Submit a quiz entry",
+    "version": "0.1.0",
+    "name": "SubmitQuizEntry",
+    "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "api_key",
+            "description": "<p>Mandatory API key</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "question",
+            "description": "<p>Body: question field</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>Body: answer field</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"id\"",
+              "\"en\"",
+              "\"others\""
+            ],
+            "optional": false,
+            "field": "lang",
+            "description": "<p>Body: language field (available: id, en, others)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"wordgame\"",
+              "\"jokes\"",
+              "\"trivia\"",
+              "\"others\""
+            ],
+            "optional": false,
+            "field": "type",
+            "description": "<p>Body: type of quiz (available:</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{ \n  \"question\": \"What is a question?\",\n  \"answer\": \"One that has answer\",\n  \"lang\": \"en\",\n  \"type\": \"trivia\" \n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Quiz has been created</p>"
+          }
+        ]
+      }
+    },
+    "filename": "app/routes/quiz.routes.js",
+    "groupTitle": "Quiz"
+  }
+] });
